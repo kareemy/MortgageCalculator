@@ -3,7 +3,6 @@ package com.example.mortgagecalculator
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,8 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -133,7 +130,7 @@ fun MortgageCalculatorLayout() {
                 .fillMaxWidth()
         )
         Text(
-            text = "Monthly Payment: ${monthlyPayment}",
+            text = "Monthly Payment: $monthlyPayment",
             fontWeight = FontWeight.Bold,
             fontSize = 22.sp
         )
@@ -142,7 +139,7 @@ fun MortgageCalculatorLayout() {
 
 private fun calculateMortgage(p: Int, r: Double, n: Int): String {
     var mortgage = p * ( (r*(1.0 + r).pow(n)) / ((1.0 + r).pow(n) - 1) )
-    if (mortgage.isNaN()) mortgage = 0.0
+    if (mortgage.isNaN() || mortgage.isInfinite()) mortgage = 0.0
     return NumberFormat.getCurrencyInstance().format(mortgage)
 }
 
